@@ -15,13 +15,14 @@ services:
             - mssql
         command: /bin/bash -c 'until /opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P "Password!23" -Q "create database Keycloak"; do sleep 5; done'
     keycloak:
-        image: quay.io/keycloak/keycloak:14.0.0
+        image: quay.io/keycloak/keycloak:19.0.2-legacy
         depends_on:
             - mssql
             - mssqlscripts
         ports:
             - "8080:8080"
         environment:
+            - JDBC_PARAMS= trustServerCertificate=true
             - KEYCLOAK_USER=admin
             - KEYCLOAK_PASSWORD=admin
             - DB_VENDOR=mssql
