@@ -13,7 +13,7 @@ services:
           - mssql
       command: /bin/bash -c 'until /opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P "Password!23" -Q "create database Keycloak"; do sleep 5; done'
   keycloak:
-    image: quay.io/keycloak/keycloak:19.0.1
+    image: quay.io/keycloak/keycloak:19.0.2
     command: ["start-dev","--spi-connections-jpa-default-migration-strategy=update"]
     ports:
       - '8080:8080'
@@ -23,7 +23,7 @@ services:
       - KEYCLOAK_ADMIN=pqs
       - KEYCLOAK_ADMIN_PASSWORD=Primaria001.
       - KC_DB=mssql
-      - KC_DB_URL=jdbc:sqlserver://mssql;databaseName=Keycloak
+      - KC_DB_URL=jdbc:sqlserver://mssql;databaseName=Keycloak;encrypt=true;trustServerCertificate=true
       - KC_DB_USERNAME=sa
       - KC_DB_PASSWORD=Password!23
       - KC_HEALTH_ENABLED=true
